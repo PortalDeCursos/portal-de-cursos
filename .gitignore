@@ -1,0 +1,13 @@
+node_modules/
+dist/
+dist-ssr/
+frontend/reports/
+.env
+.env.*
+!.env.example
+*.local
+*.log
+*.tsbuildinfo
+.idea/
+.vscode/
+.DS_Store
