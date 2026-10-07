@@ -1,50 +1,69 @@
 # Portal de Cursos
 
-Frontend com React, TypeScript, Vite e Tailwind CSS.
+Protótipo navegável de um portal acadêmico, implementado em React, TypeScript, Vite e Tailwind CSS a partir do Figma. Os dados acadêmicos, indicadores e contatos são demonstrativos.
 
-Execute na pasta `frontend`:
+## Começar
+
+Use Node.js 24 e npm. Instale as dependências do frontend uma vez:
 
 ```sh
-npm install
+npm --prefix frontend ci
 npm run dev
 ```
 
-Antes de concluir cada etapa:
+Abra o endereço mostrado pelo Vite. Os comandos da raiz encaminham para `frontend`:
 
 ```sh
-npm run lint
-npm run build
+npm run check        # lint + testes + build + fixtures visuais
+npm run preview      # prévia do build
 ```
 
-Componentes compartilhados ficam em `src/components`, tipos e componentes de domínio em `src/features`, páginas em `src/pages` e dados de demonstração em `src/mocks`. O `App.tsx` organiza as rotas e o layout global.
+## O que funciona
 
-Manrope é carregada pelo Google Fonts em `index.html` e requer acesso à internet. Para hospedagem local futura, coloque arquivos licenciados em `public/fonts` e configure `@font-face`. Nenhum logotipo foi fornecido: o cabeçalho usa texto e um ícone.
+- Home, catálogo, biblioteca de projetos e páginas de detalhes.
+- Busca sem distinção de acentos, filtros combinados e estado da busca na URL.
+- Abas de curso por teclado, grade por semestre e projetos filtrados por curso.
+- Skeleton, estado vazio e falha com nova tentativa no catálogo.
+- Header persistente com logo local, navegação ativa e menu móvel acessível.
 
-Home implementada a partir do Figma, nó 7:2, com os cursos e projetos acadêmicos do protótipo. Catálogo com busca, biblioteca e detalhes usam dados locais de demonstração. A interface pública não possui controles de simulação. Listas vazias mostram uma mensagem automaticamente; estados de carregamento, erro e nova tentativa serão ligados à futura integração com a API. Submissão, área restrita e documentos institucionais exibem um aviso de funcionalidade pendente; não enviam dados. Formulários, autenticação e APIs são etapas futuras. O backend pode ser adicionado em uma pasta própria.
+Submissão, autenticação, documentos e contato exibem um aviso de integração pendente. Não há backend, envio de formulários ou login real. As fontes Manrope e JetBrains Mono são carregadas pelo Google Fonts e precisam de internet.
 
-Os assets exportados do Figma estão em `frontend/public/design`. As cores específicas do protótipo usam tokens `academic-*`, preservando os tokens compartilhados iniciais. A fonte JetBrains Mono também é carregada pelo Google Fonts para as notas do protótipo.
+## Rotas
 
-Os scripts usam `--configLoader native` para evitar a falha do empacotador de configuração ao carregar o módulo nativo do Tailwind no Windows. Requer Node com suporte a TypeScript nativo (validado com Node 24).
+| Rota | Tela |
+| --- | --- |
+| `/` | Home |
+| `/cursos` | Catálogo com filtros |
+| `/cursos/tads` | Detalhes do TADS |
+| `/cursos/:courseId` | Detalhes de curso |
+| `/projetos` | Biblioteca |
+| `/projetos/:projectId` | Detalhes de projeto |
 
-Em produção, configure a hospedagem para encaminhar as rotas do frontend para `index.html`.
+## Organização
 
-## Catálogo e detalhes dos cursos
-
-O catálogo implementa os frames `9:2765`, `9:3190` e `9:3334` como estados da mesma página. Busca, filtros combinados, remoção de filtros e recuperação da busca funcionam com os dados locais. Os filtros ficam na URL. O módulo de dados é carregado de forma assíncrona, com skeleton e tratamento de falha; não há atraso artificial ou botões públicos de simulação.
-
-Os detalhes implementam os frames `10:4128`, `10:4468` e `10:4732`. A identidade do curso permanece ao trocar entre visão geral, grade curricular, professores e projetos aprovados. As abas permitem navegação por setas, Home e End. O estado sem projetos depende dos dados; quando somente uma categoria está vazia, a mensagem orienta a remover o filtro.
-
-Componentes do catálogo estão em `src/features/courses`, os de detalhes em `src/features/courses/details` e os de projetos em `src/features/projects`. Header e Footer são compartilhados. A foto do laboratório e os ícones do Figma estão em `public/design`.
-
-Os conteúdos, indicadores, currículos, docentes e dados institucionais continuam demonstrativos. A grade de exemplo do TADS possui 32 componentes de 75 horas, totalizando 2.400 horas. Os outros cursos usam os conteúdos disponíveis, sem repetir indevidamente as informações específicas do TADS. Documentos PDF, submissão e contato dependem da integração institucional e exibem o aviso já usado no projeto.
-
-Validação adicional, na pasta `frontend`:
-
-```sh
-npm run test
-npm run build
-npm run check:views
+```text
+frontend/src/
+  components/layout/    # Header e Footer
+  components/ui/        # Elementos compartilhados
+  features/courses/     # Catálogo, filtros, tipos e detalhes
+  features/projects/    # Projetos e filtros
+  services/             # Acesso a dados, hoje por mocks
+  mocks/                # Conteúdo demonstrativo
+  pages/                # Composição das telas
+  App.tsx               # Rotas e layout global
 ```
 
-`check:views` gera snapshots estáticos dos componentes reais de carregamento e de curso sem projetos em `reports`, para revisão visual; eles não são rotas de simulação da aplicação pública.
+Assets locais ficam em `frontend/src/assets` e `frontend/public/design`. A origem visual é o [protótipo no Figma](https://www.figma.com/design/6NyMCCCMKYeNv6QRvZXzE4). A publicação do código não concede uma licença independente para marcas ou materiais de terceiros.
+
+## Fluxo de desenvolvimento
+
+`main` guarda a versão validada. `develop` é a base para desenvolvimento futuro; ambas começam com a mesma versão preparada. A tag `prototype-baseline` preserva o protótipo anterior às melhorias. Crie branches curtas como `feat/api-courses` a partir de `develop`, abra PR para `develop` e valide antes de promover uma versão para `main`. Evite branches permanentes para cada experimento.
+
+A CI executa lint, testes, build e geração de fixtures em pushes e PRs. Os relatórios gerados em `frontend/reports` ficam fora do Git e são disponibilizados como artefatos da CI.
+
+Leia [CONTRIBUTING.md](CONTRIBUTING.md), [arquitetura](docs/architecture.md) e [roadmap](docs/roadmap.md).
+
+## Publicação futura
+
+O build está em `frontend/dist`. Configure a hospedagem SPA para redirecionar rotas para `index.html`. O carregador nativo da configuração Vite evita uma incompatibilidade do módulo Tailwind no Windows; por isso usamos Node 24. Este repositório não publica automaticamente o site.
 

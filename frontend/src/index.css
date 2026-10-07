@@ -44,13 +44,19 @@ body {
   .portal-brand { display: flex; align-items: center; gap: 12px; font-size: 18px; font-weight: 700; letter-spacing: -.45px; white-space: nowrap; }
   .portal-logo { width: 40px; height: 40px; object-fit: contain; flex: none; }
   .brand-highlight { color: var(--color-brand); }
-  .site-header nav { display: flex; align-items: center; gap: 24px; }
+  .header-navigation { display: flex; align-items: center; justify-content: space-between; flex: 1; margin-left: clamp(24px, 7vw, 100px); gap: 24px; }
+  .menu-toggle { display: none; }
+  .site-header nav { display: flex; align-items: center; gap: 8px; }
+  .site-header nav a { min-height: 44px; padding: 12px 16px; border-radius: 8px; display: inline-flex; align-items: center; }
+  .site-header nav a.active { color: var(--color-academic-brand); background: var(--color-academic-tint); }
   .site-header nav a, .header-actions { font-size: 14px; font-weight: 600; color: var(--color-academic-muted); }
   .site-header nav a:hover, .header-actions button:hover { color: var(--color-academic-brand); }
   .header-actions { display: flex; align-items: center; gap: 16px; white-space: nowrap; }
   .header-actions button { cursor: pointer; }
-  .submission-link { padding: 4px 16px; background: white; border-radius: 8px; box-shadow: 0 1px 1.5px #0b1f330a; color: var(--color-academic-brand); }
-  .restricted-link { padding: 4px 8px; }
+  .submission-link { min-height: 44px; padding: 10px 16px; background: var(--color-academic-brand); border-radius: 8px; color: white; }
+  .header-actions .submission-link:hover { color: white; background: #0039ae; }
+  .restricted-link { min-height: 44px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--color-border); border-radius: 8px; }
+  .restricted-link .design-icon { padding: 5px; width: 28px; height: 28px; background: var(--color-academic-ink); border-radius: 50%; }
   .user-button { display: flex; align-items: center; justify-content: center; border-radius: 100%; width: 32px; height: 32px; background: var(--color-academic-ink); }
   .home-page { color: var(--color-academic-ink); background: var(--color-academic-canvas); }
   .home-content { display: flex; flex-direction: column; gap: 40px; padding-block: 40px; }
@@ -140,12 +146,24 @@ body {
     .section-controls { flex-wrap: wrap; }
     .footer-bottom { flex-wrap: wrap; }
   }
+  @media (max-width: 1023px) {
+    .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 12px; }
+    .menu-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 8px; background: var(--color-academic-tint); cursor: pointer; }
+    .header-navigation { display: none; flex-basis: 100%; margin: 0; padding-block: 8px; border-top: 1px solid var(--color-border); }
+    .header-navigation.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+    .site-header nav { width: 100%; flex-direction: column; align-items: stretch; gap: 4px; }
+    .header-actions { flex-wrap: wrap; }
+  }
   @media (max-width: 767px) {
     .container { padding-inline: 24px; }
-    .header-inner { flex-wrap: wrap; padding-block: 16px; gap: 16px; }
-    .site-header nav { order: 3; width: 100%; }
+    .header-inner { flex-wrap: wrap; padding-block: 10px; gap: 12px; }
+    .menu-toggle { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 8px; background: var(--color-academic-tint); cursor: pointer; }
+    .header-navigation { display: none; flex-basis: 100%; margin: 0; padding-block: 8px; border-top: 1px solid var(--color-border); }
+    .header-navigation.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+    .site-header nav { width: 100%; flex-direction: column; align-items: stretch; gap: 4px; }
     .header-actions { gap: 8px; }
-    .header-actions .restricted-link { display: none; }
+    .header-actions { flex-wrap: wrap; }
+    .header-actions .restricted-link { display: inline-flex; }
     .submission-link { padding-inline: 8px; font-size: 12px; }
     .home-content { gap: 32px; padding-block: 24px; }
     .home-hero { grid-template-columns: 1fr; gap: 32px; min-height: auto; }

@@ -199,6 +199,7 @@
     .course-career-grid + .course-allocation { margin-top: 24px; }
     .course-coordination { padding: 20px; gap: 12px; align-items: flex-start; }
     .course-coordination > div { min-width: 0; flex: 1; }
+    .course-coordination > button { flex-basis: 100%; justify-content: flex-start; }
     .course-coordination p { overflow-wrap: anywhere; }
     .course-curriculum details { padding: 16px; }
     .course-curriculum summary { flex-wrap: wrap; gap: 8px; font-size: 16px; }
